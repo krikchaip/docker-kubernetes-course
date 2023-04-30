@@ -1,0 +1,17 @@
+{
+  "name": "docker-kubernetes-course",
+  "author": "krikchaip",
+  "version": "0.0.1",
+  "private": true,
+  "main": "src/server",
+  "type": "module",
+  "scripts": {
+    "start": "node ."
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "engines": {
+    "node": "18.x"
+  }
+}
