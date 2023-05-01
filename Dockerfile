@@ -4,6 +4,8 @@ RUN npm install -g pnpm@7.27
 
 WORKDIR /app
 
+# first arg -> [relative path to build "context"]
+# second arg -> [path inside container]
 COPY package.json .
 COPY pnpm-lock.yaml .
 
