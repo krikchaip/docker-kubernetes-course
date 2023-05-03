@@ -15,3 +15,9 @@ $ docker build . -t $(basename $(pwd))
 ```bash
 $ docker run -p 3000:3000 docker-kubernetes-course
 ```
+
+### Redis CLI
+
+```bash
+$ docker exec -it docker-kubernetes-course-redis-1 redis-cli
+```
