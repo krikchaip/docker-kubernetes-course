@@ -13,7 +13,10 @@ $ docker build . -t $(basename $(pwd))
 ### Run the app container
 
 ```bash
-$ docker run -p 3000:3000 docker-kubernetes-course
+$ docker run \
+  -p 3000:3000 \
+  -e REDIS_URL=redis://host.docker.internal:6379 \
+  docker-kubernetes-course
 ```
 
 ### Redis CLI
