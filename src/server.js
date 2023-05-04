@@ -12,6 +12,10 @@ app.get('/', async (req, res) => {
   res.send(`<h1>Number of visits: ${visits}</h1>`)
 })
 
+app.get('/crash', (req, res) => {
+  process.exit(1)
+})
+
 app.listen(PORT, async () => {
   redisClient.on('error', console.error)
   await redisClient.connect()

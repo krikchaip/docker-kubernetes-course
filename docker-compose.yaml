@@ -11,3 +11,4 @@ services:
     environment:
       - PORT=4001
       - REDIS_URL=redis://redis-server:6379
+    restart: on-failure
