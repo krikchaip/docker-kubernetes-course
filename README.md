@@ -13,6 +13,7 @@ $ docker build . -t $(basename $(pwd))
 ### Run the app container
 
 ```bash
+# assuming redis is running inside docker
 $ docker run \
   -p 3000:3000 \
   -e REDIS_URL=redis://host.docker.internal:6379 \

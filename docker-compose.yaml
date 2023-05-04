@@ -1,5 +1,13 @@
 services:
-  redis:
+  redis-server:
     image: redis:7-alpine
     ports:
       - 6379:6379
+
+  node-app:
+    build: .
+    ports:
+      - 4001:4001
+    environment:
+      - PORT=4001
+      - REDIS_URL=redis://redis-server:6379
