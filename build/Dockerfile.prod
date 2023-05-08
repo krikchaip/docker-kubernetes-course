@@ -11,8 +11,13 @@ COPY pnpm-lock.yaml .
 
 RUN pnpm install --frozen-lockfile
 
-COPY src/ src/
+COPY . .
 
-ENV PORT=3000
+RUN pnpm build
+
+ARG REDIS_URL
+
+ENV PORT=4001
+ENV REDIS_URL=${REDIS_URL}
 
 CMD ["pnpm", "start"]
