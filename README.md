@@ -7,21 +7,21 @@ Udemy Link: [Docker and Kubernetes the complete guide](https://udemy.com/course/
 ### Build the app
 
 ```bash
-$ docker build . -t $(basename $(pwd))
+$ docker rmi $(basename $(pwd)); docker build . \
+  -f build/Dockerfile.prod \
+  -t $(basename $(pwd)) \
+  --build-arg REDIS_URL=redis://host.docker.internal:6379
 ```
 
 ### Run the app container
 
 ```bash
 # assuming redis is running inside docker
-$ docker run \
-  -p 3000:3000 \
-  -e REDIS_URL=redis://host.docker.internal:6379 \
-  docker-kubernetes-course
+$ docker run -p 4001:4001 --rm $(basename $(pwd))
 ```
 
 ### Redis CLI
 
 ```bash
-$ docker exec -it docker-kubernetes-course-redis-1 redis-cli
+$ docker compose exec -it redis-server redis-cli
 ```
