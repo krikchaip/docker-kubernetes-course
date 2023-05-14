@@ -1,14 +1,26 @@
 services:
   redis-server:
     image: redis:7-alpine
+    container_name: redis-server
     ports:
       - 6379:6379
+    tty: true
 
   node-app:
-    build: .
+    build:
+      context: .
+      dockerfile: build/Dockerfile.dev
+    container_name: node-app
+    working_dir: /app
+    volumes:
+      - /app/node_modules # ignore host's /node_modules if exists
+      - .:/app
     ports:
       - 4001:4001
     environment:
       - PORT=4001
       - REDIS_URL=redis://redis-server:6379
+    entrypoint: script/docker-entrypoint
+    command: pnpm dev
     restart: on-failure
+    tty: true
