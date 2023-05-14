@@ -1,0 +1,10 @@
+FROM node:18-alpine
+
+ARG PNPM_STORE="/.pnpm-store"
+
+RUN apk update && \
+  apk add --no-cache bash && \
+  npm install -g pnpm@7.27 && \
+  pnpm config -g set store-dir $PNPM_STORE
+
+SHELL ["/bin/bash", "-c"]
