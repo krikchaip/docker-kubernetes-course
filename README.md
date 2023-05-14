@@ -4,6 +4,14 @@ Udemy Link: [Docker and Kubernetes the complete guide](https://udemy.com/course/
 
 ## Commands
 
+### Rebuild dev container image
+
+```bash
+$ docker rm -fv node-app; \
+  docker rmi "$(basename $(pwd))-node-app"; \
+  docker compose build --no-cache node-app
+```
+
 ### Build the app
 
 ```bash
