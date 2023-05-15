@@ -1,8 +1,7 @@
 import express from 'express'
 import { createClient } from 'redis'
 
-const PORT = process.env.PORT ? Number(process.env.PORT) : 8080
-const REDIS_URL = process.env.REDIS_URL ?? 'redis://localhost:6379'
+import { PORT, REDIS_URL } from './config'
 
 const app = express()
 const redisClient = createClient({ url: REDIS_URL })
