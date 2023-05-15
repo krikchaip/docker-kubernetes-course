@@ -16,9 +16,10 @@ $ docker rm -fv node-app; \
 
 ```bash
 $ docker rmi $(basename $(pwd)); docker build . \
+  --no-cache \
   -f build/Dockerfile.prod \
   -t $(basename $(pwd)) \
-  --build-arg REDIS_URL=redis://host.docker.internal:6379
+  --build-arg REDIS_URL=redis://host.docker.internal:6379 \
 ```
 
 ### Run the app container
