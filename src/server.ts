@@ -1,7 +1,7 @@
 import express from 'express'
 import { createClient } from 'redis'
 
-import { PORT, REDIS_URL } from './config'
+import { PORT, REDIS_URL } from '~/config'
 
 const app = express()
 const redisClient = createClient({ url: REDIS_URL })
