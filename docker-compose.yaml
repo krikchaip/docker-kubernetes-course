@@ -4,27 +4,26 @@ services:
     container_name: redis-server
     volumes:
       - redis_data:/data
-    ports:
-      - 6379:6379
+    expose:
+      - 6379
     tty: true
 
   node-app:
+    depends_on:
+      - redis-server
     build:
       context: .
       dockerfile: build/Dockerfile.dev
     container_name: node-app
-    working_dir: /app
+    working_dir: /docker-kubernetes-course
     volumes:
-      - node_modules:/app/node_modules # ignore host's /node_modules if exists
-      - .:/app
+      - node_modules:/docker-kubernetes-course/node_modules
+      - .:/docker-kubernetes-course
     ports:
       - 4001:4001
     environment:
       - PORT=4001
       - REDIS_URL=redis://redis-server:6379
-    entrypoint: script/docker-entrypoint
-    command: pnpm dev
-    restart: on-failure
     tty: true
 
 volumes:
