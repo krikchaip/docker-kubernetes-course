@@ -4,29 +4,28 @@ Udemy Link: [Docker and Kubernetes the complete guide](https://udemy.com/course/
 
 ## Commands
 
-### Rebuild dev container image
-
-```bash
-$ docker rm -fv node-app; \
-  docker rmi "$(basename $(pwd))-node-app"; \
-  docker compose build --no-cache node-app
-```
-
 ### Build the app
 
 ```bash
-$ docker rmi $(basename $(pwd)); docker build . \
+$ docker rmi $(basename $PWD); docker build . \
   --no-cache \
-  -f build/Dockerfile.prod \
-  -t $(basename $(pwd)) \
-  --build-arg REDIS_URL=redis://host.docker.internal:6379 \
+  --progress plain \
+  -t $(basename $PWD) \
+  -f build/Dockerfile.prod
 ```
 
 ### Run the app container
 
 ```bash
-# assuming redis is running inside docker
-$ docker run -p 4001:4001 --rm $(basename $(pwd))
+# assumes redis already running inside docker
+  # --link redis-server \
+$ docker run --rm \
+  --name node-app-prod \
+  --network docker-kubernetes-course_default \
+  -p 3000:4001 \
+  -e PORT=4001 \
+  -e REDIS_URL=redis://redis-server:6379 \
+  $(basename $PWD)
 ```
 
 ### Redis CLI
