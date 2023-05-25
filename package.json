@@ -3,8 +3,7 @@
   "author": "krikchaip",
   "version": "0.0.1",
   "private": true,
-  "main": "dist/server",
-  "type": "module",
+  "main": "dist/server.mjs",
   "scripts": {
     "dev": "tsx watch --clear-screen=false src/server",
     "build": "tsup src/server.ts --format esm",
