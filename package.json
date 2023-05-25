@@ -6,7 +6,7 @@
   "main": "dist/server.mjs",
   "scripts": {
     "dev": "tsx watch --clear-screen=false src/server",
-    "build": "tsup src/server.ts --format esm",
+    "build": "tsc && tsup src/server.ts --format esm",
     "start": "node ."
   },
   "dependencies": {
