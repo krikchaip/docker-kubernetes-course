@@ -1,23 +1,36 @@
-FROM node:18-alpine
-
+FROM node:18-alpine as base
 RUN npm install -g pnpm@7.27
 
-WORKDIR /app
+FROM base as build
+WORKDIR /build
 
-# first arg -> [relative path to build "context"]
-# second arg -> [path inside container]
-COPY package.json .
-COPY pnpm-lock.yaml .
-
+# ...first args -> [relative path to build "context"]
+# last arg      -> [path inside container]
+COPY package.json pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile
 
 COPY . .
-
 RUN pnpm build
 
-ARG REDIS_URL
+FROM base as deps
+WORKDIR /deps
 
-ENV PORT=4001
-ENV REDIS_URL=${REDIS_URL}
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install --frozen-lockfile --prod
 
-CMD ["pnpm", "start"]
+FROM alpine as runtime
+
+# install nodejs binary
+COPY --from=base /usr/lib /usr/lib
+COPY --from=base /usr/local/bin/node /usr/local/bin/node
+
+# add a non-root user (node) for runtime environment
+RUN adduser -u 1000 -g '' -h /home/node -s /bin/sh -D node
+USER node
+
+WORKDIR /home/node/app
+
+COPY --from=build --chown=node:node /build/dist dist
+COPY --from=deps --chown=node:node /deps/node_modules node_modules
+
+ENTRYPOINT ["node", "dist/server.mjs"]
