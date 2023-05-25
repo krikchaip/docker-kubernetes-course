@@ -18,8 +18,7 @@ $ docker rmi $(basename $PWD); docker build . \
 
 ```bash
 # assumes redis already running inside docker
-  # --link redis-server \
-$ docker run --rm \
+$ docker run --rm -it \
   --name node-app-prod \
   --network docker-kubernetes-course_default \
   -p 3000:4001 \
